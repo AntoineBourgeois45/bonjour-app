@@ -8,7 +8,7 @@ export default function Home() {
 
   const fetchApi = async () => {
     try {
-      const response = await fetch(`http://localhost:3002/api/bonjour?prenom=${prenom}`);
+      const response = await fetch(`http://localhost:3000/api/bonjour?prenom=${prenom}`);
       const data = await response.json();
       if (response.ok) {
         setMessage(data.message);
