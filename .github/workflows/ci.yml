@@ -28,11 +28,10 @@ jobs:
         with:
           path: |
             ~/.cargo/registry
-            src-tauri/target
+            hello-user-app/src-tauri/target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
-        working-directory: ./hello-user-app
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
