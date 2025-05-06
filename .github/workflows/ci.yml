@@ -11,10 +11,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
 
@@ -22,8 +22,20 @@ jobs:
         run: npm ci
         working-directory: ./hello-user-app
 
+      - name: Lint with ESLint
+        run: npx eslint . --ext .js,.ts,.tsx
+        working-directory: ./hello-user-app
+
+      - name: Type-check with TypeScript
+        run: npx tsc --noEmit
+        working-directory: ./hello-user-app
+      
+      - name: Run unit tests
+        run: npm test
+        working-directory: ./hello-user-app
+
       - name: Cache Rust build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
