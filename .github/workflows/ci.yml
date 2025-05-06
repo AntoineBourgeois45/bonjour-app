@@ -36,7 +36,7 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: ${{ env.RUSTUP_TOOLCHAIN }}
+          toolchain: stable
           override: true
           components: rustfmt, clippy
 
@@ -50,5 +50,5 @@ jobs:
         with:
           name: tauri-windows-${{ github.run_number }}
           path: |
-            ./hello-user-app/src-tauri/target/${{ env.TAURI_TARGET }}/release/bundle/msi/*.msi
-            ./hello-user-app/src-tauri/target/${{ env.TAURI_TARGET }}/release/bundle/zip/*.zip
+            ./hello-user-app/src-tauri/target/x86_64-pc-windows-msvc/release/bundle/msi/*.msi
+            ./hello-user-app/src-tauri/target/x86_64-pc-windows-msvc/release/bundle/zip/*.zip
