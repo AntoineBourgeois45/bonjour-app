@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./hello-user-app
+
+      - name: Cache Rust build
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            src-tauri/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+        working-directory: ./hello-user-app
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ env.RUSTUP_TOOLCHAIN }}
+          override: true
+          components: rustfmt, clippy
+
+      - name: Build app
+        run: npm run tauri:build
+        working-directory: ./hello-user-app
+
+      - name: Upload Windows installer
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: tauri-windows-${{ github.run_number }}
+          path: |
+            ./hello-user-app/src-tauri/target/${{ env.TAURI_TARGET }}/release/bundle/msi/*.msi
+            ./hello-user-app/src-tauri/target/${{ env.TAURI_TARGET }}/release/bundle/zip/*.zip
