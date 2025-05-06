@@ -14,8 +14,8 @@ describe('Composant Home', () => {
     test('Affiche l\'interface correctement', () => {
       render(<Home />);
       
-      expect(screen.getByText('Entrez votre prenom ci-dessous')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Entrez votre prénom')).toBeInTheDocument();
+      expect(screen.getByText('Entrez votre prenom')).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('Votre prenom')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Envoyer' })).toBeInTheDocument();
       
       expect(screen.queryByText(/Bonjour/)).not.toBeInTheDocument();
@@ -24,7 +24,7 @@ describe('Composant Home', () => {
     test('Permet de saisir un prénom dans le champ de texte', () => {
       render(<Home />);
       
-      const inputElement = screen.getByPlaceholderText('Entrez votre prénom');
+      const inputElement = screen.getByPlaceholderText('Votre prenom');
       fireEvent.change(inputElement, { target: { value: 'Antoine' } });
       
       expect(inputElement.value).toBe('Antoine');
@@ -38,7 +38,7 @@ describe('Composant Home', () => {
       
       render(<Home />);
       
-      const inputElement = screen.getByPlaceholderText('Entrez votre prénom');
+      const inputElement = screen.getByPlaceholderText('Votre prenom');
       fireEvent.change(inputElement, { target: { value: 'Antoine' } });
       
       const buttonElement = screen.getByRole('button', { name: 'Envoyer' });
@@ -59,7 +59,7 @@ describe('Composant Home', () => {
       
       render(<Home />);
       
-      const inputElement = screen.getByPlaceholderText('Entrez votre prénom');
+      const inputElement = screen.getByPlaceholderText('Votre prenom');
       fireEvent.change(inputElement, { target: { value: 'Antoine' } });
       
       const buttonElement = screen.getByRole('button', { name: 'Envoyer' });
@@ -75,7 +75,7 @@ describe('Composant Home', () => {
       
       render(<Home />);
       
-      const inputElement = screen.getByPlaceholderText('Entrez votre prénom');
+      const inputElement = screen.getByPlaceholderText('Votre prenom');
       fireEvent.change(inputElement, { target: { value: 'Antoine' } });
       
       const buttonElement = screen.getByRole('button', { name: 'Envoyer' });
