@@ -46,7 +46,7 @@ jobs:
 
       - name: Upload Windows installer
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: tauri-windows-${{ github.run_number }}
           path: |
